@@ -15,9 +15,7 @@ const Badge = styled.div`
   border-radius: 14px;
   background: #e9ecef;
   color: #343a40;
-  font-family: Poppins;
   font-size: 12px;
-  font-style: normal;
   font-weight: 400;
   line-height: normal;
   letter-spacing: -0.48px;

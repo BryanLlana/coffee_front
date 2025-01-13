@@ -1,9 +1,11 @@
-import { categories } from "../../../../../data/categories";
+import { useCoffeeContext } from "../../../../../context/hooks/useCoffeeContext";
 import Button from "../../../../components/Button";
 import { theme } from "../../../../config/theme";
 import Category from "../Category";
 
 const Sidebar = () => {
+  const { categories } = useCoffeeContext();
+
   return (
     <div className="md:w-72">
       <div className="p-4">
@@ -15,13 +17,15 @@ const Sidebar = () => {
         ))}
       </div>
 
-      <Button
-        style={{ marginTop: 15, width: "100%" }}
-        backgroundColor={theme.color.ALERT[700]}
-        borderColor={theme.color.ALERT[700]}
-      >
-        Cancelar orden
-      </Button>
+      <div style={{ padding: "0px 10px" }}>
+        <Button
+          style={{ marginTop: 15, width: "100%" }}
+          backgroundColor={theme.color.ALERT[700]}
+          borderColor={theme.color.ALERT[700]}
+        >
+          Cancelar orden
+        </Button>
+      </div>
     </div>
   );
 };

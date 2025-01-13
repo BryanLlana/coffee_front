@@ -26,11 +26,8 @@ export const Btn = styled.button<StyledBtnProps>`
 			padding-inline: 0;
 		`}
 
-	letter-spacing: -0.64px;
 	font-size: 16px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: normal;
+	font-weight: bold;
 
 	border: none;
 	outline: none;

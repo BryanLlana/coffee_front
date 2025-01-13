@@ -5,11 +5,14 @@ import { Router } from "./router";
 import "@fontsource/onest";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./common/config/theme";
+import { CoffeeProvider } from "./context/CoffeeProvider";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-      <Router />
+      <CoffeeProvider>
+        <Router />
+      </CoffeeProvider>
     </ThemeProvider>
   </StrictMode>
 );
