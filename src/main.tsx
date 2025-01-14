@@ -6,6 +6,7 @@ import "@fontsource/onest";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./common/config/theme";
 import { CoffeeProvider } from "./context/CoffeeProvider";
+import { ToastContainer } from "react-toastify";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -14,5 +15,6 @@ createRoot(document.getElementById("root")!).render(
         <Router />
       </CoffeeProvider>
     </ThemeProvider>
+    <ToastContainer />
   </StrictMode>
 );

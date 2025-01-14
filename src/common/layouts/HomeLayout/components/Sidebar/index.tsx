@@ -17,7 +17,7 @@ const Sidebar = () => {
         ))}
       </div>
 
-      <div style={{ padding: "0px 10px" }}>
+      <div style={{ padding: "10px 10px" }}>
         <Button
           style={{ marginTop: 15, width: "100%" }}
           backgroundColor={theme.color.ALERT[700]}

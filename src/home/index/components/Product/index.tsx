@@ -1,13 +1,21 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { IProduct } from "../../types";
 import { formatMoney } from "../../../../common/utils";
 import Button from "../../../../common/components/Button";
+import { useCoffeeContext } from "../../../../context/hooks/useCoffeeContext";
 
 interface IProductProps {
   product: IProduct;
+  onClick: (product: IProduct) => void;
 }
 
 const Product: FC<IProductProps> = (props) => {
+  const { cart } = useCoffeeContext();
+
+  const existsProductInCart = useMemo(() => {
+    return cart.some((p) => p.id === props.product.id);
+  }, [cart]);
+
   return (
     <div className="border p-3 shadow bg-white flex flex-col">
       <img
@@ -20,7 +28,15 @@ const Product: FC<IProductProps> = (props) => {
         <p className="font-black text-2xl text-amber-500">
           {formatMoney(props.product.price)}
         </p>
-        <Button style={{ width: "100%" }}>Agregar</Button>
+        <Button
+          style={{ width: "100%" }}
+          onClick={() => {
+            props.onClick(props.product);
+          }}
+          disabled={existsProductInCart}
+        >
+          Agregar
+        </Button>
       </div>
     </div>
   );
