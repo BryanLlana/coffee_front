@@ -1,16 +1,17 @@
-import React, { createContext, FC, useState } from "react";
-import { ICategory } from "../common/layouts/HomeLayout/components/Category/types";
-import { categories as categoriesDB } from "../data/categories";
+import React, { createContext, FC, useEffect, useState } from "react";
 import { IProductCart } from "../home/index/types";
+import { ICategory } from "../home/services/getCategories";
+import { useGetCategories } from "../home/hooks/useGetCategories";
 
 interface ICoffeeContext {
   categories: ICategory[];
   currentCategory: ICategory | null;
-  setCurrentCategory: React.Dispatch<React.SetStateAction<ICategory>>;
+  setCurrentCategory: React.Dispatch<React.SetStateAction<ICategory | null>>;
   cart: IProductCart[];
   addProductInCart: (product: IProductCart) => void;
   deleteProductInCart: (id: number) => void;
   updateQuantityInCart: (product: IProductCart) => void;
+  loadingCategories: boolean;
 }
 
 const CoffeeContext = createContext<ICoffeeContext>({
@@ -21,6 +22,7 @@ const CoffeeContext = createContext<ICoffeeContext>({
   addProductInCart: () => {},
   deleteProductInCart: () => {},
   updateQuantityInCart: () => {},
+  loadingCategories: false,
 });
 
 interface ICoffeeProvider {
@@ -28,10 +30,20 @@ interface ICoffeeProvider {
 }
 
 export const CoffeeProvider: FC<ICoffeeProvider> = ({ children }) => {
-  const [categories] = useState<ICategory[]>(categoriesDB);
-  const [currentCategory, setCurrentCategory] = useState<ICategory>(
-    categoriesDB[0]
+  const getCategories = useGetCategories();
+  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [currentCategory, setCurrentCategory] = useState<ICategory | null>(
+    null
   );
+
+  useEffect(() => {
+    getCategories.handle().then((categories) => {
+      if (categories) {
+        setCategories(categories);
+        setCurrentCategory(categories[0]);
+      }
+    });
+  }, []);
 
   const [cart, setCart] = useState<IProductCart[]>([]);
 
@@ -59,6 +71,7 @@ export const CoffeeProvider: FC<ICoffeeProvider> = ({ children }) => {
         addProductInCart,
         deleteProductInCart,
         updateQuantityInCart,
+        loadingCategories: getCategories.loading,
       }}
     >
       {children}
